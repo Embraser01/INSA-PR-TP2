@@ -35,26 +35,33 @@
  * intended for use in the design, construction, operation or
  * maintenance of any nuclear facility.
  */
-package client;
+package server;
 
-import protocol.HelloItf;
+import protocol.IServer;
+import server.implementation.Server;
 
-import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.server.UnicastRemoteObject;
 
-public class Client {
+public class MainServer {
 
-    public static void main(String[] args) {
+    public static void main(String args[]) {
 
-        String host = (args.length < 1) ? null : args[0];
-        Integer port = (args.length < 2) ? 1099 : Integer.parseInt(args[1]);
+        Integer port = (args.length < 1) ? 1099 : Integer.parseInt(args[0]);
         try {
-            Registry registry = LocateRegistry.getRegistry(host, port);
-            HelloItf stub = (HelloItf) registry.lookup("Hello1");
-            String response = stub.sayHello();
-            System.out.println("response: " + response);
+
+            Registry registry = LocateRegistry.createRegistry(port);
+
+            Server obj = new Server();
+            IServer stub = (IServer) UnicastRemoteObject.exportObject(obj, 0);
+
+            registry.bind("Server", stub);
+
+            System.err.println("Server ready");
+
         } catch (Exception e) {
-            System.err.println("Client exception: " + e.toString());
+            System.err.println("Server exception: " + e.toString());
             e.printStackTrace();
         }
     }
