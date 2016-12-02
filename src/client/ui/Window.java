@@ -114,11 +114,10 @@ public class Window {
                     break;
             }
         } catch (RemoteException e) {
-            addMessage("<span style=\"color=red\">" + e.getMessage() + "</span>");
+            addMessage("<html><span style=\"color=red\">" + e.getMessage() + "</span></html>");
         }
 
         messageField.setText("");
-
     }
 
     public void addMessage(String message) {

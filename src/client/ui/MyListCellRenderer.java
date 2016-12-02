@@ -6,7 +6,7 @@ import java.awt.*;
 public class MyListCellRenderer extends JLabel implements ListCellRenderer<Object> {
 
     public MyListCellRenderer() {
-        setFont(new Font("Sans Serif", Font.PLAIN, 14));
+        setFont(new Font("Sans Serif", Font.PLAIN, 12));
     }
 
     @Override

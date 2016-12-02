@@ -37,10 +37,15 @@
         <children>
           <component id="4b295" class="javax.swing.JList" binding="messageList" custom-create="true">
             <constraints/>
-            <properties/>
+            <properties>
+              <background color="-1"/>
+            </properties>
           </component>
         </children>
       </scrollpane>
     </children>
   </grid>
+  <inspectionSuppressions>
+    <suppress inspection="NoLabelFor"/>
+  </inspectionSuppressions>
 </form>
