@@ -26,8 +26,8 @@ public class Window {
     private static String name;
     private static Window instance = null;
 
-    private Window(IClient client) {
 
+    private void setClient(IClient client) {
         this.client = client;
 
         sendButton.addActionListener(e -> sendMessage());
@@ -53,11 +53,13 @@ public class Window {
 
             name = JOptionPane.showInputDialog(null, "Nickname?");
 
+            instance = new Window();
 
-            instance = new Window(
-                    stub.connect((INotifier) UnicastRemoteObject.exportObject(new Notifier(), 0),
-                            name)
-            );
+            IClient client = stub.connect(
+                    (INotifier) UnicastRemoteObject.exportObject(new Notifier(), 0),
+                    name);
+
+            instance.setClient(client);
 
         } catch (Exception e) {
             System.err.println("Client exception: " + e.toString());
@@ -68,12 +70,6 @@ public class Window {
         JFrame frame = new JFrame(name);
         frame.setContentPane(instance.root);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        /*frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                e.getWindow().dispose();
-            }
-        });*/
 
         frame.pack();
         frame.setVisible(true);
@@ -93,10 +89,14 @@ public class Window {
         try {
             switch (command) {
                 case "/join":
-                    client.join(words[1]);
+                    defaultListModel.removeAllElements();
+                    if (!client.join(words[1])) {
+                        addMessage("Invalid room");
+                    }
                     break;
                 case "/leave":
                     client.leave();
+                    defaultListModel.removeAllElements();
                     break;
                 case "/nick":
                     client.updateNickname(words[1]);

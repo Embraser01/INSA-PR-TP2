@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 public class Server implements IServer {
 
+    private static final String ROOM_NAME_REGEX = "^[a-zA-Z0-9_]+$";
     private HashMap<String, Room> rooms;
 
     public Server() {
@@ -31,7 +32,9 @@ public class Server implements IServer {
     }
 
     public Room join(Client client, String room) {
-        Room room1 = rooms.computeIfAbsent(room, k -> new Room());
+        if (!room.matches(ROOM_NAME_REGEX)) return null;
+
+        Room room1 = rooms.computeIfAbsent(room, k -> new Room(room));
 
         room1.join(client);
         return room1;

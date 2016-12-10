@@ -17,6 +17,9 @@ public class Client implements IClient {
         this.server = server;
         this.notifier = notifier;
         this.nick = nick;
+
+        send(String.format("<html><span>Welcome %s!<br>" +
+                "To get help type : /help<span></html>", nick));
     }
 
     @Override
@@ -24,7 +27,7 @@ public class Client implements IClient {
         if (nick == null) return false;
         if (room != null) room.leave(this);
         room = server.join(this, roomId);
-        return true;
+        return room != null;
     }
 
     @Override
@@ -63,6 +66,7 @@ public class Client implements IClient {
         } catch (RemoteException e) {
             System.out.println("Client error : ");
             e.printStackTrace();
+            if (room != null) room.leave(this);
         }
     }
 
