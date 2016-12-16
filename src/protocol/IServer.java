@@ -12,5 +12,12 @@ import java.rmi.RemoteException;
  */
 public interface IServer extends Remote {
 
+    /**
+     * Connect a client
+     * @param notifier message listener
+     * @param nickname nickname
+     * @return Client Handler
+     * @throws RemoteException RMI Exception
+     */
     IClient connect(INotifier notifier, String nickname) throws RemoteException;
 }

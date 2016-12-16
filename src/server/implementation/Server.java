@@ -35,7 +35,7 @@ public class Server implements IServer {
      *
      * @param notifier Notifier object of the client
      * @param nickname Nickname of the client
-     * @return
+     * @return if succeeded
      */
     @Override
     public IClient connect(INotifier notifier, String nickname) {
@@ -55,7 +55,7 @@ public class Server implements IServer {
      *
      * @param client Client joining a room
      * @param room Room to be joined
-     * @return
+     * @return if succeeded
      */
     public Room join(Client client, String room) {
         if (!room.matches(ROOM_NAME_REGEX)) return null;

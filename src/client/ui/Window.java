@@ -90,9 +90,8 @@ public class Window {
      * the server
      *
      * @param args Arguments given to the program, we use args[0] for the hostname and args[1] for the port
-     * @throws IOException
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         String host = (args.length < 1) ? null : args[0];
         Integer port = (args.length < 2) ? 1099 : Integer.parseInt(args[1]);
@@ -128,7 +127,7 @@ public class Window {
     /**
      * Returns the instance of the window (singleton)
      *
-     * @return
+     * @return the singleton
      */
     public static Window getInstance() {
         return instance;

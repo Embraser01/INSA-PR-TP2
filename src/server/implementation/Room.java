@@ -79,7 +79,7 @@ public class Room {
      * Adds a user to the room
      *
      * @param client Client handler to be added
-     * @return
+     * @return if succeeded
      */
     public boolean join(Client client) {
 
@@ -128,7 +128,7 @@ public class Room {
      * Removes a client from the room
      *
      * @param client Client leaving the room
-     * @return
+     * @return if succeeded
      */
     public boolean leave(Client client) {
         broadcast(null, String.format("<b>%s</b> has left the room.", client.getNick()), false);

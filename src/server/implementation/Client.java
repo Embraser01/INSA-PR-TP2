@@ -54,7 +54,7 @@ public class Client implements IClient {
      * Joins the room with ID roomId
      *
      * @param roomId ID of the room to join
-     * @return
+     * @return if succeeded
      */
     @Override
     public boolean join(String roomId) {
@@ -77,7 +77,7 @@ public class Client implements IClient {
      * Updates the nickname of the user
      *
      * @param nickname New nickname
-     * @return
+     * @return if succeeded
      */
     @Override
     public boolean updateNickname(String nickname) {
@@ -89,7 +89,7 @@ public class Client implements IClient {
     /**
      * Return the help string explaining how to user chat commands
      *
-     * @return
+     * @return if succeeded
      */
     @Override
     public String help() {
@@ -104,7 +104,7 @@ public class Client implements IClient {
      * Broadcasts a message to all other users in the room
      *
      * @param message Message to be broadcast
-     * @return
+     * @return if succeeded
      */
     @Override
     public boolean broadcast(String message) {
@@ -132,7 +132,7 @@ public class Client implements IClient {
     /**
      * Nickname getter
      *
-     * @return
+     * @return nickname
      */
     public String getNick() {
         return nick;

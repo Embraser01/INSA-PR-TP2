@@ -16,7 +16,7 @@ public interface INotifier extends Remote {
      * Notifies the client of a new message
      *
      * @param message New message
-     * @throws RemoteException
+     * @throws RemoteException RMI Exception
      */
     void notifyMessage(String message) throws RemoteException;
 }

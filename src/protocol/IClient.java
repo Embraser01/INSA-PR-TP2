@@ -17,15 +17,15 @@ public interface IClient extends Remote {
      * Joins a room
      *
      * @param roomId ID of the room to be joined
-     * @return
-     * @throws RemoteException
+     * @return if succeeded
+     * @throws RemoteException RMI Exception
      */
     boolean join(String roomId) throws RemoteException;
 
     /**
      * Leaves the current room of the user
      *
-     * @throws RemoteException
+     * @throws RemoteException RMI Exception
      */
     void leave() throws RemoteException;
 
@@ -33,16 +33,16 @@ public interface IClient extends Remote {
      * Updates the nickname of the user
      *
      * @param nickname New nickname to be used
-     * @return
-     * @throws RemoteException
+     * @return if succeeded
+     * @throws RemoteException RMI Exception
      */
     boolean updateNickname(String nickname) throws RemoteException;
 
     /**
      * Returns the help string from the server
      *
-     * @return
-     * @throws RemoteException
+     * @return Help message
+     * @throws RemoteException RMI Exception
      */
     String help() throws RemoteException;
 
@@ -50,8 +50,8 @@ public interface IClient extends Remote {
      * Broadcasts a message to the other users in the room
      *
      * @param message Message to be broadcast
-     * @return
-     * @throws RemoteException
+     * @return if succeeded
+     * @throws RemoteException RMI Exception
      */
     boolean broadcast(String message) throws RemoteException;
 }

@@ -52,7 +52,7 @@ public class Message implements Serializable {
     /**
      * Converts the message to a string
      *
-     * @return
+     * @return HTML Message
      */
     @Override
     public String toString() {
