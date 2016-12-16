@@ -4,9 +4,19 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 /**
- * Created by marca on 02/12/2016.
+ * Used by RMI to describe the object used by the server to notify clients of new incoming messages
+ *
+ * @author Tristan Bourvon
+ * @author Marc-Antoine FERNANDES
+ * @version 1.0.0
  */
 public interface INotifier extends Remote {
 
+    /**
+     * Notifies the client of a new message
+     *
+     * @param message New message
+     * @throws RemoteException
+     */
     void notifyMessage(String message) throws RemoteException;
 }

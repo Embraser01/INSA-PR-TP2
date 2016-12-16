@@ -4,7 +4,11 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 /**
- * Created by marca on 02/12/2016.
+ * Describes the method of the Server object, used to get a new client handle upon connection
+ *
+ * @author Tristan Bourvon
+ * @author Marc-Antoine FERNANDES
+ * @version 1.0.0
  */
 public interface IServer extends Remote {
 

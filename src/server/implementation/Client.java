@@ -5,14 +5,42 @@ import protocol.INotifier;
 
 import java.rmi.RemoteException;
 
+/**
+ * Client handler given to the client to call methods on the server to join, leave, etc
+ *
+ * @author Tristan Bourvon
+ * @author Marc-Antoine FERNANDES
+ * @version 1.0.0
+ */
 public class Client implements IClient {
 
+    /**
+     * Server object used to interact with rooms and other users
+     */
     private Server server = null;
+
+    /**
+     * Notifier object used to notify the client of new messages
+     */
     private INotifier notifier = null;
+
+    /**
+     * The current room of the user
+     */
     private Room room = null;
+
+    /**
+     * Nickname of the user
+     */
     private String nick = null;
 
-
+    /**
+     * Initialization constructor, also sends a welcome message
+     *
+     * @param server see {@link #server}
+     * @param notifier see {@link #notifier}
+     * @param nick see {@link #nick}
+     */
     public Client(Server server, INotifier notifier, String nick) {
         this.server = server;
         this.notifier = notifier;
@@ -22,6 +50,12 @@ public class Client implements IClient {
                 "To get help type : /help<span></html>", nick));
     }
 
+    /**
+     * Joins the room with ID roomId
+     *
+     * @param roomId ID of the room to join
+     * @return
+     */
     @Override
     public boolean join(String roomId) {
         if (nick == null) return false;
@@ -30,12 +64,21 @@ public class Client implements IClient {
         return room != null;
     }
 
+    /**
+     * Leave the current room of the user
+     */
     @Override
     public void leave() {
         if (room != null) room.leave(this);
         room = null;
     }
 
+    /**
+     * Updates the nickname of the user
+     *
+     * @param nickname New nickname
+     * @return
+     */
     @Override
     public boolean updateNickname(String nickname) {
         nick = nickname;
@@ -43,6 +86,11 @@ public class Client implements IClient {
         return true;
     }
 
+    /**
+     * Return the help string explaining how to user chat commands
+     *
+     * @return
+     */
     @Override
     public String help() {
         return "<html>Help :<br>" +
@@ -52,6 +100,12 @@ public class Client implements IClient {
                 "&#09;/help : Display this menu</html>";
     }
 
+    /**
+     * Broadcasts a message to all other users in the room
+     *
+     * @param message Message to be broadcast
+     * @return
+     */
     @Override
     public boolean broadcast(String message) {
         if (room == null) return false;
@@ -60,6 +114,11 @@ public class Client implements IClient {
         return true;
     }
 
+    /**
+     * Used by the server to send a message to the client
+     *
+     * @param message Message to be sent
+     */
     public void send(String message) {
         try {
             notifier.notifyMessage(message);
@@ -70,6 +129,11 @@ public class Client implements IClient {
         }
     }
 
+    /**
+     * Nickname getter
+     *
+     * @return
+     */
     public String getNick() {
         return nick;
     }

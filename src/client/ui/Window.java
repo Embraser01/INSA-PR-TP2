@@ -12,21 +12,64 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
-
+/**
+ * Main client class, sets up the GUI, the RMI registry and the bindings
+ *
+ * @author Tristan Bourvon
+ * @author Marc-Antoine FERNANDES
+ * @version 1.0.0
+ */
 public class Window {
+    /**
+     * List used to display the messages
+     */
     private JList<String> messageList;
+
+    /**
+     * List model storing messages, used by the JList to display the messages
+     */
     private DefaultListModel<String> defaultListModel;
+
+    /**
+     * Field used to type and send messages
+     */
     private JTextField messageField;
+
+    /**
+     * Button used to send messages
+     */
     private JButton sendButton;
+
+    /**
+     * Root panel of the interface
+     */
     private JPanel root;
+
+    /**
+     * Scroll pane allowing the message list to be scrolled
+     */
     private JScrollPane scrollPane;
+
+    /**
+     * Client object returned by the server, used to execute remote commands
+     */
     private IClient client;
 
-
+    /**
+     * Name of the user
+     */
     private static String name;
+
+    /**
+     * Instance of the window (singleton)
+     */
     private static Window instance = null;
 
-
+    /**
+     * Sets the current client object to communicate with the server
+     *
+     * @param client Client to be used for the communication
+     */
     private void setClient(IClient client) {
         this.client = client;
 
@@ -42,6 +85,13 @@ public class Window {
         });
     }
 
+    /**
+     * Main entry point of the program, sets up the RMI registry, the interface, and gets a new Client handler from
+     * the server
+     *
+     * @param args Arguments given to the program, we use args[0] for the hostname and args[1] for the port
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
 
         String host = (args.length < 1) ? null : args[0];
@@ -75,10 +125,18 @@ public class Window {
         frame.setVisible(true);
     }
 
+    /**
+     * Returns the instance of the window (singleton)
+     *
+     * @return
+     */
     public static Window getInstance() {
         return instance;
     }
 
+    /**
+     * Handles the input of the message field and calls the corresponding methods on the client object
+     */
     public void sendMessage() {
         String message = messageField.getText().trim();
 
@@ -120,6 +178,11 @@ public class Window {
         messageField.setText("");
     }
 
+    /**
+     * Adds a new message to the message list
+     *
+     * @param message Message to be added
+     */
     public void addMessage(String message) {
         defaultListModel.addElement(message);
 
@@ -129,6 +192,9 @@ public class Window {
 
     }
 
+    /**
+     * Initializes the list and its model
+     */
     private void createUIComponents() {
         defaultListModel = new DefaultListModel<>();
 
@@ -136,8 +202,16 @@ public class Window {
         messageList.setCellRenderer(new MyListCellRenderer());
     }
 
+    /**
+     * Object sent to the server used to notify the client of new messages
+     */
     private static class Notifier implements INotifier {
 
+        /**
+         * Notifies the client of the arrival of a new message
+         *
+         * @param message New message
+         */
         @Override
         public void notifyMessage(String message) {
             instance.addMessage(message);
